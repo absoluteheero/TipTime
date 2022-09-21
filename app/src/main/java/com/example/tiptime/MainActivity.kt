@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -152,8 +153,8 @@ fun RoundTheTipRow(
     }
 
 }
-
-fun calculateTip(
+@VisibleForTesting
+internal fun calculateTip(
     amount: Double, percent: Double = 15.0, roundUp: Boolean): String{
 
     var tip = percent / 100 * amount
