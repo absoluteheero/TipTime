@@ -58,6 +58,7 @@ fun TipTimeScreen() {
     val tipPercent = tipInput.toDoubleOrNull() ?: 0.0
     val amount = amountInput.toDoubleOrNull() ?: 0.0
     val tip = calculateTip(amount, tipPercent, roundUp)
+    val totalPayment = tip + amount
 
     Column(
         modifier = Modifier.padding(32.dp),
@@ -97,7 +98,14 @@ fun TipTimeScreen() {
 
 
         Text(
-            text = stringResource(R.string.tip_amount, tip),
+            text = stringResource(R.string.tip_amount, NumberFormat.getCurrencyInstance().format(tip)),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = stringResource(R.string.total_payment, NumberFormat.getCurrencyInstance().format(totalPayment)),
             modifier = Modifier.align(Alignment.CenterHorizontally),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
@@ -155,12 +163,12 @@ fun RoundTheTipRow(
 }
 @VisibleForTesting
 internal fun calculateTip(
-    amount: Double, percent: Double = 15.0, roundUp: Boolean): String{
+    amount: Double, percent: Double = 15.0, roundUp: Boolean): Double{
 
     var tip = percent / 100 * amount
     if (roundUp)
         tip = kotlin.math.ceil(tip)
-    return NumberFormat.getCurrencyInstance().format(tip)
+    return tip
 }
 
 @Preview(showBackground = true)
